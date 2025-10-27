@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drive Time & Mileage Field Guide - SAS Retail Logic 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            color: #333;
+            background-color: #f5f5f5;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        header {
+            text-align: center;
+            border-bottom: 3px solid #1F4E78;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            color: #000;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            font-size: 20px;
+            color: #1F4E78;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .version {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        h2 {
+            font-size: 22px;
+            color: #000;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #1F4E78;
+        }
+        
+        h2:first-of-type {
+            border-top: none;
+        }
+        
+        h3 {
+            font-size: 18px;
+            color: #1F4E78;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+        
+        h4 {
+            font-size: 16px;
+            color: #2E75B5;
+            margin-top: 12px;
+            margin-bottom: 6px;
+        }
+        
+        p {
+            margin-bottom: 8px;
+        }
+        
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 10px;
+        }
+        
+        li {
+            margin-bottom: 4px;
+        }
+        
+        ul ul {
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+        
+        .quick-start {
+            background-color: #1F4E78;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .quick-start h3 {
+            color: white;
+            margin-top: 0;
+            font-size: 20px;
+        }
+        
+        .quick-start ul {
+            margin-left: 20px;
+        }
+        
+        .quick-start li {
+            color: white;
+        }
+        
+        .warning-box {
+            background-color: #FFF3CD;
+            border-left: 4px solid #C00000;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        
+        .warning-box strong {
+            color: #C00000;
+        }
+        
+        .note-box {
+            background-color: #E7F3FF;
+            border-left: 4px solid #1F4E78;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        
+        .critical-box {
+            background-color: #C00000;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .critical-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+        
+        .critical-box ul {
+            margin-left: 20px;
+        }
+        
+        .critical-box li {
+            color: white;
+            margin-bottom: 6px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #1F4E78;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .toc {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+            border-top: none;
+            font-size: 20px;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+            margin-left: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 6px;
+        }
+        
+        .toc a {
+            color: #1F4E78;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+            color: #2E75B5;
+        }
+        
+        a.section-link {
+            color: #1F4E78;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        a.section-link:hover {
+            text-decoration: underline;
+        }
+        
+        .checklist {
+            background-color: #f9f9f9;
+            border: 2px solid #1F4E78;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .checklist h3 {
+            color: #1F4E78;
+            margin-top: 0;
+            text-align: center;
+            font-size: 20px;
+        }
+        
+        .checklist h4 {
+            margin-top: 12px;
+            margin-bottom: 6px;
+        }
+        
+        .back-to-top {
+            text-align: right;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .back-to-top a {
+            color: #1F4E78;
+            text-decoration: none;
+        }
+        
+        .back-to-top a:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 2px solid #1F4E78;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        strong {
+            font-weight: bold;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 10px;
+            }
+            
+            .back-to-top {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            h2 {
+                font-size: 20px;
+            }
+            
+            h3 {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header id="top">
+            <h1>FIELD GUIDE</h1>
+            <div class="subtitle">Drive Time & Mileage Reporting</div>
+            <div class="version">SAS Retail Logic - 2025</div>
+        </header>
+
+        <div class="quick-start">
+            <h3>QUICK START</h3>
+            <p><strong>What You Need to Know:</strong></p>
+            <ul>
+                <li>System automatically tracks Home to Store, Store to Store, and Store to Home travel</li>
+                <li>Travel Time and Paid Travel Time are calculated automatically</li>
+                <li><strong>ALWAYS add 'Store to Home' on your last visit of the day</strong></li>
+                <li>You can edit or delete travel entries if mistakes are made</li>
+                <li>Change reasons required when editing: Traffic, Construction, Weather, Avoiding Tolls, Avoiding Freeway, Alternate Location</li>
+            </ul>
+        </div>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#section1">1. Team Lead Procedures</a></li>
+                <li><a href="#section2">2. Merchandiser Procedures</a></li>
+                <li><a href="#section3">3. Editing In-Progress Visits</a></li>
+                <li><a href="#section4">4. Deleting Travel Records</a></li>
+                <li><a href="#section5">5. Viewing & Editing Completed Visits</a></li>
+                <li><a href="#section6">6. Important Notes & Reminders</a></li>
+                <li><a href="#section7">7. Change Reason Codes</a></li>
+                <li><a href="#section8">8. Troubleshooting</a></li>
+                <li><a href="#checklist">Quick Reference Checklist</a></li>
+            </ul>
+        </div>
+
+        <h2 id="section1">1. Team Lead Procedures</h2>
+        
+        <h3>Starting a Visit</h3>
+        <h4>Lead's Steps:</h4>
+        <ol>
+            <li>Login to APK on the tablet</li>
+            <li>Navigate to the scheduled visit</li>
+            <li>Click the START button</li>
+            <li>System automatically creates Home to Store travel entry with mileage</li>
+        </ol>
+        
+        <div class="note-box">
+            <strong>Note:</strong> Team members check in the same way they currently do. No changes to their check-in process.
+        </div>
+
+        <h4>Viewing Travel Information (Lead):</h4>
+        <ol>
+            <li>Click 'ADD TIME PUNCH' button</li>
+            <li>View the following information:
+                <ul>
+                    <li>Travel Work Type (Home to Store, Store to Store, Store to Home)</li>
+                    <li>Start and End Times</li>
+                    <li>Miles traveled</li>
+                    <li>Travel Time (total time traveling)</li>
+                    <li>Paid Travel Time (compensated portion)</li>
+                </ul>
+            </li>
+        </ol>
+        <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+
+        <h2 id="section2">2. Merchandiser Procedures</h2>
+        
+        <h3>Starting Work</h3>
+        <ol>
+            <li>Get tablet from Team Lead</li>
+            <li>Click 'ADD TIME PUNCH' button</li>
+            <li>Enter your PIN</li>
+            <li>Click SUBMIT</li>
+            <li>Employee Time Punch window appears</li>
+            <li>Click 'Start Work' button</li>
+            <li>View your travel details (same as Lead view)</li>
+            <li>Click 'Save & Close'</li>
+            <li>Click YES to confirm</li>
+            <li>Success message appears</li>
+        </ol>
+        
+        <div class="warning-box">
+            <strong>⚠ IMPORTANT:</strong> If editing Start Work time creates overlap with travel time, a warning appears. Click YES to recalculate travel time automatically.
+        </div>
+
+        <h3>Ending Work</h3>
+        <ol>
+            <li>Navigate to Shift Completion screen</li>
+            <li>Click 'ADD TIME PUNCH' button</li>
+            <li>Enter your PIN</li>
+            <li>Click 'End Work' button</li>
+        </ol>
+
+        <h3>Adding Store to Home (REQUIRED FOR LAST VISIT)</h3>
+        
+        <div class="warning-box">
+            <strong>⚠ CRITICAL:</strong> Always add Store to Home travel on your LAST visit of the day, even if travel is not paid. This prevents missed travel on future visits.
+        </div>
+        
+        <ol>
+            <li>After clicking End Work, 'Add Store to Home' button appears</li>
+            <li><strong>Click 'Add Store to Home' button</strong></li>
+            <li>Store to Home travel entry is added with mileage</li>
+            <li>Click 'Save & Close'</li>
+            <li>Click YES to confirm</li>
+            <li>Success message appears</li>
+        </ol>
+        <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+
+        <h2 id="section3">3. Editing In-Progress Visits</h2>
+        
+        <p>You can edit travel times and mileage during an active visit if errors occur.</p>
+
+        <h3>Steps to Edit Travel Entry:</h3>
+        <ol>
+            <li>Click 'ADD TIME PUNCH' button</li>
+            <li>Enter your PIN</li>
+            <li>Locate the travel entry you need to edit (Home to Store, Store to Store, or Store to Home)</li>
+            <li>Click the pencil icon in the Manage column</li>
+            <li>Adjust Start Time or End Time as needed</li>
+            <li>Click the checkmark to confirm</li>
+            <li>Select a Change Reason from dropdown (see <a href="#section7" class="section-link">Section 7</a>)</li>
+            <li>Add optional comments if needed</li>
+            <li>Click SUBMIT</li>
+            <li>Click 'Save & Close'</li>
+            <li>Click YES to confirm</li>
+            <li>Updated Travel Time and Paid Travel Time display</li>
+        </ol>
+        
+        <div class="note-box">
+            <strong>Note:</strong> The system automatically recalculates Travel Time and Paid Travel Time when you change start or end times.
+        </div>
+        <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+
+        <h2 id="section4">4. Deleting Travel Records</h2>
+        
+        <p>If a travel entry was added by mistake, you can delete it during an in-progress visit.</p>
+
+        <h3>Steps to Delete:</h3>
+        <ol>
+            <li>Click 'ADD TIME PUNCH' button</li>
+            <li>Enter your PIN</li>
+            <li>Locate the travel entry to delete</li>
+            <li>Click the trash can icon in the Manage column</li>
+            <li>Warning message appears: 'Are you sure you want to delete this time entry?'</li>
+            <li>Click YES</li>
+            <li>Select a Change Reason from dropdown (see <a href="#section7" class="section-link">Section 7</a>)</li>
+            <li>Add optional comments</li>
+            <li>Click SUBMIT</li>
+            <li>Click 'Save & Close'</li>
+            <li>Travel Time and Paid Travel Time update to 0.0000</li>
+        </ol>
+
+        <h3>Re-Adding Deleted Travel:</h3>
+        <p>If you deleted a travel record by mistake:</p>
+        <ol>
+            <li>Click 'ADD TIME PUNCH' button</li>
+            <li>Click 'Add additional details' (blue + button)</li>
+            <li>Select 'Travel to Store' from Work Type dropdown</li>
+            <li>Click START</li>
+            <li>Travel entry is recreated with mileage</li>
+            <li>Click 'Save & Close' and confirm</li>
+        </ol>
+        <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+
+        <h2 id="section5">5. Viewing & Editing Completed Visits</h2>
+        
+        <p>Team members can view and edit drive time and mileage after a visit is completed.</p>
+
+        <h3>Viewing Completed Visit:</h3>
+        <ol>
+            <li>Navigate to Schedule screen</li>
+            <li>Locate the completed visit</li>
+            <li>Click the 'View Time' button</li>
+            <li>Employee Time Punch Overview window opens</li>
+            <li>Review all travel entries with times, miles, and paid travel time</li>
+        </ol>
+
+        <h3>Editing Completed Visit:</h3>
+        <ol>
+            <li>From Employee Time Punch Overview, locate the entry to edit</li>
+            <li>Click the pencil icon</li>
+            <li>Edit Start Time or End Time</li>
+            <li>Click the checkmark</li>
+            <li>Select Change Reason from dropdown (see <a href="#section7" class="section-link">Section 7</a>)</li>
+            <li>Click SUBMIT</li>
+            <li>Click 'Save & Close'</li>
+            <li>Click YES to confirm</li>
+            <li>Success message appears</li>
+            <li>Updated times display immediately</li>
+        </ol>
+        
+        <div class="note-box">
+            <strong>Note:</strong> Changes made in completed visits will sync with Time & Expense system. Supervisors can edit travel times without recompleting the entire visit.
+        </div>
+        <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+
+        <h2 id="section6">6. Important Notes & Reminders</h2>
+
+        <div class="critical-box">
+            <h3>CRITICAL REMINDERS</h3>
+            <ul>
+                <li><strong>ALWAYS add 'Store to Home' on your last visit of the day</strong>
+                    <ul>
+                        <li>Add it even if travel is not paid</li>
+                        <li>This prevents missed travel on future visits</li>
+                    </ul>
+                </li>
+                <li>Travel between stores within 5 hours goes on the store you are going TO
+                    <ul>
+                        <li>Travel after work is always 'Store to Home'</li>
+                    </ul>
+                </li>
+                <li>When viewing completed visits, changes reflect Time & Expense updates</li>
+                <li>Supervisors can edit travel times without recompleting visits</li>
+                <li>Team Leads can now report exceptions on completed visits</li>
+                <li>A Change Reason is REQUIRED for all edits and deletions</li>
+            </ul>
+        </div>
+        <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+
+        <h2 id="section7">7. Change Reason Codes</h2>
+        
+        <p>Required whenever editing or deleting travel entries. Select the reason that best describes why the change is needed.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Change Reason</th>
+                    <th>When to Use</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Traffic</strong></td>
+                    <td>Unexpected delays due to traffic congestion</td>
+                </tr>
+                <tr>
+                    <td><strong>Construction</strong></td>
+                    <td>Road construction, detours, or lane closures</td>
+                </tr>
+                <tr>
+                    <td><strong>Weather</strong></td>
+                    <td>Adverse weather conditions affecting travel time</td>
+                </tr>
+                <tr>
+                    <td><strong>Avoiding Tolls</strong></td>
+                    <td>Took alternate route to avoid toll roads</td>
+                </tr>
+                <tr>
+                    <td><strong>Avoiding Freeway</strong></td>
+                    <td>Used surface streets instead of highway/freeway</td>
+                </tr>
+                <tr>
+                    <td><strong>Alternate Location</strong></td>
+                    <td>Started or ended at different location than system calculated</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="note-box">
+            <strong>Note:</strong> You can add optional comments in the text field to provide additional context for the change.
+        </div>
+        <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+
+        <h2 id="section8">8. Troubleshooting</h2>
+
+        <h3>Common Issues & Solutions</h3>
+
+        <h4>Issue: Overlap Warning Appears</h4>
+        <ul>
+            <li><strong>Problem:</strong> 'Work time overlaps with travel to store. Would you like to recalculate travel to correct overlap?'</li>
+            <li><strong>Solution:</strong> Click YES to let the system automatically recalculate travel time. The system will adjust the travel entry to eliminate overlap.</li>
+        </ul>
+
+        <h4>Issue: Forgot to Add Store to Home</h4>
+        <ul>
+            <li><strong>Problem:</strong> Completed visit without adding Store to Home travel</li>
+            <li><strong>Solution:</strong> View the completed visit using 'View Time' button. You can still add Store to Home travel from the completed visit screen using 'Add Store to Home' button. See <a href="#section5" class="section-link">Section 5</a> for details.</li>
+        </ul>
+
+        <h4>Issue: Accidentally Deleted Travel Entry</h4>
+        <ul>
+            <li><strong>Problem:</strong> Deleted wrong travel entry during in-progress visit</li>
+            <li><strong>Solution:</strong> Click 'Add additional details' and select 'Travel to Store' from dropdown. Click START to recreate the entry. See <a href="#section4" class="section-link">Section 4</a> for complete steps.</li>
+        </ul>
+
+        <h4>Issue: Mileage Seems Incorrect</h4>
+        <ul>
+            <li><strong>Problem:</strong> System calculated mileage doesn't match actual travel</li>
+            <li><strong>Solution:</strong> Contact your direct supervisor. Miles are automatically calculated and may require supervisor adjustment if GPS data is incorrect.</li>
+        </ul>
+
+        <h4>Issue: Can't Find Completed Visit</h4>
+        <ul>
+            <li><strong>Problem:</strong> Need to edit travel for past visit but can't locate it</li>
+            <li><strong>Solution:</strong> Navigate to Schedule screen and find the date of the visit. Click on the specific visit to expand details, then click 'View Time' button.</li>
+        </ul>
+
+        <h4>Issue: System Won't Accept Changes</h4>
+        <ul>
+            <li><strong>Problem:</strong> Changes not saving or error message appears</li>
+            <li><strong>Solution:</strong> Ensure you selected a Change Reason from the dropdown. All edits and deletions require a reason (see <a href="#section7" class="section-link">Section 7</a>). If problem persists, contact your supervisor.</li>
+        </ul>
+
+        <div class="warning-box">
+            <strong>⚠ For any issues not listed here, please contact your direct supervisor immediately.</strong>
+        </div>
+        <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+
+        <div class="checklist" id="checklist">
+            <h3>DAILY CHECKLIST</h3>
+            
+            <h4>Start of Shift:</h4>
+            <ul>
+                <li>☐ Team Lead starts visit</li>
+                <li>☐ Home to Store travel automatically created</li>
+                <li>☐ Merchandisers clock in with 'Start Work'</li>
+            </ul>
+            
+            <h4>During Shift:</h4>
+            <ul>
+                <li>☐ Check travel entries for accuracy</li>
+                <li>☐ Edit immediately if errors found</li>
+                <li>☐ Always select Change Reason for edits (see <a href="#section7" class="section-link">Section 7</a>)</li>
+            </ul>
+            
+            <h4>End of Last Visit:</h4>
+            <ul>
+                <li>☐ <strong>Click 'End Work'</strong></li>
+                <li>☐ <strong>CRITICAL: Click 'Add Store to Home'</strong></li>
+                <li>☐ Verify Store to Home entry appears</li>
+                <li>☐ Save & Close</li>
+            </ul>
+            
+            <h4>Post-Visit Review:</h4>
+            <ul>
+                <li>☐ Review completed visits for accuracy</li>
+                <li>☐ Edit completed visits if needed (no visit recomplete required)</li>
+                <li>☐ Ensure all travel entries have Change Reasons</li>
+            </ul>
+        </div>
+        <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+
+        <footer>
+            <strong>--- END OF GUIDE ---</strong><br>
+            For assistance, contact your direct supervisor
+        </footer>
+    </div>
+</body>
+</html>
